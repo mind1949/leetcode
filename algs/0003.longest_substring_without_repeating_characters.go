@@ -25,20 +25,26 @@ LengthOfLongestSubstring solves following problem:
 */
 func LengthOfLongestSubstring(s string) int {
 	runes := []rune(s)
-	lgs := 0
+	maxLen := 0
+	start := 0
+	m := make(map[rune]int, len(runes))
 	for i := 0; i < len(runes); i++ {
-		m := make(map[rune]struct{}, len(runes))
-		for j := i; j < len(runes); j++ {
-			if _, ok := m[runes[j]]; ok {
-				break
+		r := runes[i]
+		if k, ok := m[r]; ok {
+			if k >= start {
+				l := i - start
+				if maxLen < l {
+					maxLen = l
+				}
+				start = k + 1
 			}
-			m[runes[j]] = struct{}{}
 		}
-		c := len(m)
-		if lgs < c {
-			lgs = c
-		}
+		m[r] = i
+	}
+	l := len(runes) - start
+	if maxLen < l {
+		maxLen = l
 	}
 
-	return lgs
+	return maxLen
 }
