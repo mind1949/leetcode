@@ -1,4 +1,4 @@
 fmt:
 	gofmt -w -s .
 test:
-	go test algs/* -v
+	go test algs/*.go -v
