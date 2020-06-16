@@ -2,7 +2,6 @@ package algs
 
 import (
 	"strconv"
-	"fmt"
 )
 
 /*
@@ -39,7 +38,7 @@ func Reverse(x int) int {
 		s = string(v) + s
 	}
 	v, _ := strconv.Atoi(s)
-	v = v*positive
+	v = v * positive
 
 	if int(int32(v)) != v {
 		v = 0
