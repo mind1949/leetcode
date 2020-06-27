@@ -35,32 +35,30 @@ func ThreeSum(nums []int) [][]int {
 	zeros := make([][]int, 0)
 	for m := 1; m <= len(nums)-2; m++ {
 		l, r := 0, len(nums)-1
+		// 中间去重
+		if m-1 >= 0 && nums[m] == nums[m-1] {
+			if m-2 >= 0 && nums[m-2] == nums[m-1] {
+				continue
+			}
+			l, r = m-1, len(nums)-1
+		}
 		for l < m && r > m {
 			sum := nums[l] + nums[m] + nums[r]
 			if sum == 0 {
 				zero := []int{nums[l], nums[m], nums[r]}
-				// 去重
-				if !has(zeros, zero) {
-					zeros = append(zeros, zero)
-				}
+				zeros = append(zeros, zero)
 			}
 			if sum > 0 {
-				r--
+				// 右边去重
+				for cur := r; r > m && nums[cur] == nums[r]; cur, r = r, r-1 {
+				}
 			} else {
-				l++
+				// 左边去重
+				for cur := l; l < m && nums[cur] == nums[l]; cur, l = l, l+1 {
+				}
 			}
 		}
 	}
 
 	return zeros
-}
-
-func has(zeros [][]int, zero []int) bool {
-	for i := 0; i < len(zeros); i++ {
-		pre := zeros[i]
-		if pre[0] == zero[0] && pre[1] == zero[1] && pre[2] == zero[2] {
-			return true
-		}
-	}
-	return false
 }
