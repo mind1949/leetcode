@@ -30,6 +30,9 @@ func ThreeSumClosest(nums []int, target int) int {
 	// 查找里target最近的组合
 	var closest = int(math.MaxInt64)
 	for l := 0; l < len(nums)-2; l++ { // left
+		if l > 0 && nums[l] == nums[l-1] { // left 去重
+			continue
+		}
 		var (
 			m = l + 1
 			r = len(nums) - 1
