@@ -33,11 +33,16 @@ func LetterCombinations(digits string) []string {
 	for i := 0; i < len(digits); i++ {
 		combsLen := len(combs)
 		for j := 0; j < combsLen; j++ {
-			for _, letter := range m[digits[i]-'2'] {
-				combs = append(combs, combs[j]+string(letter))
+			suffix := combs[j]
+			for k, letter := range m[digits[i]-'2'] {
+				v := suffix + string(letter)
+				if k == 0 {
+					combs[j] = v
+				} else {
+					combs = append(combs, v)
+				}
 			}
 		}
-		combs = combs[combsLen:]
 	}
 
 	return combs
