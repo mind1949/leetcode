@@ -26,7 +26,7 @@ func TestInts2ListNode(t *testing.T) {
 	}
 
 	for i, c := range cs {
-		l := intSlice2ListNode(c.ints)
+		l := ints2ListNode(c.ints)
 		if !reflect.DeepEqual(l, c.l) {
 			t.Errorf("testCase: %d", i)
 		}
@@ -40,14 +40,14 @@ func TestAddTwoNumbers(t *testing.T) {
 		want *ListNode
 	}{
 		{
-			l1:   intSlice2ListNode([]int{5, 7, 8}),
-			l2:   intSlice2ListNode([]int{3, 2, 7, 9}),
-			want: intSlice2ListNode([]int{8, 9, 5, 0, 1}),
+			l1:   ints2ListNode([]int{5, 7, 8}),
+			l2:   ints2ListNode([]int{3, 2, 7, 9}),
+			want: ints2ListNode([]int{8, 9, 5, 0, 1}),
 		},
 		{
-			l1:   intSlice2ListNode([]int{1, 8}),
-			l2:   intSlice2ListNode([]int{0}),
-			want: intSlice2ListNode([]int{1, 8}),
+			l1:   ints2ListNode([]int{1, 8}),
+			l2:   ints2ListNode([]int{0}),
+			want: ints2ListNode([]int{1, 8}),
 		},
 	}
 

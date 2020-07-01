@@ -47,7 +47,7 @@ func AddTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	return l3
 }
 
-func intSlice2ListNode(ints []int) *ListNode {
+func ints2ListNode(ints []int) *ListNode {
 	l := &ListNode{}
 	n := l
 	for i := 0; i < len(ints); i++ {
@@ -58,4 +58,12 @@ func intSlice2ListNode(ints []int) *ListNode {
 		n = n.Next
 	}
 	return l
+}
+
+func listNode2Ints(head *ListNode) []int {
+	ints := make([]int, 0)
+	for node := head; node != nil; node = node.Next {
+		ints = append(ints, node.Val)
+	}
+	return ints
 }
