@@ -24,21 +24,18 @@ func RemoveNthFromEnd(head *ListNode, n int) *ListNode {
 	for cur := head; cur.Next != nil; cur = cur.Next {
 		listLen++
 	}
-	// 应对链表：[2, 1]，n=2的情况
-	if listLen == n {
-		return head.Next
-	}
 	// 计算倒数第n+1
 	var (
-		nplus = &ListNode{} // 倒数第n+1个节点
+		nplus = &ListNode{}           // 倒数第n+1个节点
+		guard = &ListNode{Next: head} // 哨兵节点
 	)
-	for cur, i := head, 0; i <= listLen-n-1; cur, i = cur.Next, i+1 {
-		if i == listLen-n-1 {
+	for cur, i := guard, 0; i <= listLen-n; cur, i = cur.Next, i+1 {
+		if i == listLen-n {
 			nplus = cur
 		}
 	}
 	// 删除倒数第n个节点
 	nplus.Next = nplus.Next.Next
 
-	return head
+	return guard.Next
 }
