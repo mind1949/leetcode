@@ -23,15 +23,22 @@ func MergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
 		}
 
 		if l1.Val < l2.Val {
-			node := l1
-			l1 = l1.Next
-			head.Next = node
+			v := l1.Val
+			for l1 != nil && v == l1.Val {
+				node := l1
+				l1 = l1.Next
+				head.Next = node
+				head = head.Next
+			}
 		} else {
-			node := l2
-			l2 = l2.Next
-			head.Next = node
+			v := l2.Val
+			for l2 != nil && v == l2.Val {
+				node := l2
+				l2 = l2.Next
+				head.Next = node
+				head = head.Next
+			}
 		}
-		head = head.Next
 	}
 
 	return guard.Next

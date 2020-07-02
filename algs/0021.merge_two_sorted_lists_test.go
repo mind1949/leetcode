@@ -26,6 +26,11 @@ func TestMergeTwoLists(t *testing.T) {
 			ints2ListNode([]int{1, 3, 4}),
 			ints2ListNode([]int{1, 1, 2, 3, 4, 4, 6}),
 		},
+		{
+			ints2ListNode([]int{-10, -10, -9, -4, 1, 6, 6}),
+			ints2ListNode([]int{-7}),
+			ints2ListNode([]int{-10, -10, -9, -7, -4, 1, 6, 6}),
+		},
 	} {
 		got := MergeTwoLists(c.l1, c.l2)
 		if !reflect.DeepEqual(
