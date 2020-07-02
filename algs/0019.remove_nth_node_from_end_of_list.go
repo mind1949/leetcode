@@ -1,23 +1,24 @@
 package algs
 
 /*
-Given a linked list, remove the n-th node from the end of list and return its head.
+RemoveNthFromEnd solves the following problem:
+	Given a linked list, remove the n-th node from the end of list and return its head.
 
-Example:
+	Example:
 
-Given linked list: 1->2->3->4->5, and n = 2.
+		Given linked list: 1->2->3->4->5, and n = 2.
 
-After removing the second node from the end, the linked list becomes 1->2->3->5.
+		After removing the second node from the end, the linked list becomes 1->2->3->5.
 
-Note:
+	Note:
 
-Given n will always be valid.
+	Given n will always be valid.
 
-Follow up:
+	Follow up:
 
-Could you do this in one pass?
+	Could you do this in one pass?
 */
-func removeNthFromEnd(head *ListNode, n int) *ListNode {
+func RemoveNthFromEnd(head *ListNode, n int) *ListNode {
 	// 求出链表的长度
 	listLen := 1
 	for cur := head; cur.Next != nil; cur = cur.Next {
