@@ -19,23 +19,18 @@ RemoveNthFromEnd solves the following problem:
 	Could you do this in one pass?
 */
 func RemoveNthFromEnd(head *ListNode, n int) *ListNode {
-	// 求出链表的长度
-	listLen := 1
-	for cur := head; cur.Next != nil; cur = cur.Next {
-		listLen++
+	guard := &ListNode{Next: head}
+
+	first := guard
+	second := guard
+	for i := 0; i < n; i++ {
+		second = second.Next
 	}
-	// 计算倒数第n+1
-	var (
-		nplus = &ListNode{}           // 倒数第n+1个节点
-		guard = &ListNode{Next: head} // 哨兵节点
-	)
-	for cur, i := guard, 0; i <= listLen-n; cur, i = cur.Next, i+1 {
-		if i == listLen-n {
-			nplus = cur
-		}
+	for second.Next != nil {
+		first = first.Next
+		second = second.Next
 	}
-	// 删除倒数第n个节点
-	nplus.Next = nplus.Next.Next
+	first.Next = first.Next.Next
 
 	return guard.Next
 }
