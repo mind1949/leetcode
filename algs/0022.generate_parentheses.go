@@ -19,10 +19,10 @@ func GenerateParenthesis(n int) []string {
 		return nil
 	}
 
-	combs := []string{""}
-	for i := 0; i < n*2; i++ {
+	combs := []string{"("}
+	for i := 1; i < n*2; i++ {
 		for l := len(combs); l > 0; l-- {
-			// combs[l]中的左括号与右括号数量
+			// combs[l-1]中的左括号与右括号数量
 			var (
 				lp, rp int
 			)
@@ -33,7 +33,7 @@ func GenerateParenthesis(n int) []string {
 				case ')':
 					rp++
 				default:
-					panic("invalid charactor: " + string(p))
+					panic("invalid character: " + string(p))
 				}
 			}
 
@@ -41,12 +41,12 @@ func GenerateParenthesis(n int) []string {
 			if lp-rp > 0 {
 				if lp < n {
 					combs = append(combs, combs[l-1]+")")
-					combs[l-1] = combs[l-1] + "("
+					combs[l-1] += "("
 				} else {
-					combs[l-1] = combs[l-1] + ")"
+					combs[l-1] += ")"
 				}
 			} else {
-				combs[l-1] = combs[l-1] + "("
+				combs[l-1] += "("
 			}
 		}
 	}
