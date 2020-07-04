@@ -15,5 +15,5 @@ algs
 └── 0001.two_sum_test.go // 测试代码
 ```
 
-# Run Rest
+# Run Test
 `make test`
