@@ -1,11 +1,12 @@
-# leetcode
+# Leetcode
+[![language](https://img.shields.io/badge/language-Golang-blue)](https://golang.org/)
 [![Documentation](https://godoc.org/github.com/mind1949/leetcode?status.svg)](https://pkg.go.dev/github.com/mind1949/leetcode?tab=doc)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mind1949/leetcode)](https://goreportcard.com/report/github.com/mind1949/leetcode) 
-[![mind949](https://img.shields.io/badge/leetcode--cn-mind1949-yellow)](https://leetcode-cn.com/u/mind1949/)
+[![leetcode-cn@mind1949](https://img.shields.io/badge/leetcode--cn-%40mind1949-yellow)](https://leetcode-cn.com/u/mind1949/)
 
 My solutions to [leetcode](https://leetcode-cn.com/) problems.
 
-# structure
+# Structure
 
 ```
 algs
@@ -14,5 +15,5 @@ algs
 └── 0001.two_sum_test.go // 测试代码
 ```
 
-# RUN TEST 
+# Run Rest
 `make test`
