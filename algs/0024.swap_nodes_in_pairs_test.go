@@ -16,7 +16,7 @@ func TestSwapPairs(t *testing.T) {
 	} {
 		got := SwapPairs(c.input)
 		if !reflect.DeepEqual(listNode2Ints(got), listNode2Ints(c.expect)) {
-			t.Errorf("input: %v\r|\rexpect: %v\r|\rgot: %v\n", listNode2Ints(c.input), listNode2Ints(c.expect), listNode2Ints(got))
+			t.Errorf("input: %v\t|\texpect: %v\t|\tgot: %v", listNode2Ints(c.input), listNode2Ints(c.expect), listNode2Ints(got))
 		}
 	}
 }
