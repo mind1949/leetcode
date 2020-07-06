@@ -46,23 +46,15 @@ func RemoveDuplicates(nums []int) int {
 	}
 
 	pre := nums[0]
-	dup := 0
-	i := 1
-	for i < numsLen-dup {
-		cur := nums[i]
-		if cur == pre {
-			// 重复数+1
-			dup++
-			// 平移未比较的数字
-			for j := i; j < numsLen-dup; j++ {
-				nums[j] = nums[j+1]
-			}
-			nums[numsLen-dup] = cur // 新重复的数字赋值给索引位置numsLen-dup
-		} else {
-			i++
-			pre = cur
+	length := 1
+	for i := 1; i < numsLen; i++ {
+		v := nums[i]
+		if v != pre {
+			nums[length] = v
+			pre = v
+			length++
 		}
 	}
 
-	return numsLen - dup
+	return length
 }
