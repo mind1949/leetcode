@@ -19,8 +19,8 @@ func TestRemoveElement(t *testing.T) {
 		if got != c.expect1 {
 			t.Errorf("nums: %v\t|\tval: %d\t|\texpect %d\t|\tgot: %d", c.nums, c.val, c.expect1, got)
 		}
-		if reflect.DeepEqual(c.nums[:got], c.expect2) {
-
+		if !reflect.DeepEqual(c.nums[:got], c.expect2) {
+			t.Errorf("nums: %v\t|\tval: %d\t|\texpect %d\t|\tgot: %d", c.nums, c.val, c.expect2, c.nums[:got])
 		}
 	}
 }

@@ -44,10 +44,6 @@ RemoveElement solves the following probelem:
 		}
 */
 func RemoveElement(nums []int, val int) int {
-	if len(nums) == 0 {
-		return 0
-	}
-
 	newLen := 0
 	for i := 0; i < len(nums); i++ {
 		num := nums[i]
