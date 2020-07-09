@@ -1,7 +1,5 @@
 package algs
 
-import "math"
-
 /*
 Divide soloves the following problem:
 	Given two integers dividend and divisor, divide two integers without using multiplication, division and mod operator.
@@ -42,16 +40,25 @@ func Divide(dividend int, divisor int) int {
 
 	// 计算商
 	quotient := 0
-	for dividend >= divisor {
-		dividend -= divisor
-		quotient++
-		if quotient > math.MaxInt32 {
-			quotient = math.MaxInt32
+	if divisor == 1 {
+		quotient = dividend
+		dividend = 0
+	}
+	guess, compare := 31, 0
+	for compare+divisor <= dividend {
+		if compare+divisor<<guess <= dividend {
+			compare += divisor << guess
+			quotient += 1 << guess
+		} else {
+			guess--
 		}
 	}
 
 	if !positive {
-		return -quotient
+		quotient = -quotient
+	}
+	if quotient > 1<<31-1 {
+		quotient = 1<<31 - 1
 	}
 	return quotient
 }

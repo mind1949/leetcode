@@ -14,6 +14,8 @@ func TestDivide(t *testing.T) {
 		{7, -3, -2},
 		{1, 1, 1},
 		{-2147483648, -1, 2147483647},
+		{-2147483648, 1, -2147483648},
+		{2147483647, 2, 2147483647 / 2},
 	} {
 		got := Divide(c.dividend, c.divisor)
 		if got != c.expect {
