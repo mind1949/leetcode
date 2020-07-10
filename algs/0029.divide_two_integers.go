@@ -49,9 +49,8 @@ func Divide(dividend int, divisor int) int {
 		if compare+divisor<<guess <= dividend {
 			compare += divisor << guess
 			quotient += 1 << guess
-		} else {
-			guess--
 		}
+		guess--
 	}
 
 	if !positive {
