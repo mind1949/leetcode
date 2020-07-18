@@ -1,8 +1,6 @@
 # Leetcode
-
 <p align='left'>
-<img src='./assets/imgs/golang-algs.jpeg'  height="120">
-<img src='./assets/imgs/leetcode-logo.jpeg'  height="120">
+<img src='./assets/imgs/golang-algs.jpeg'  height="250">
 </p>
 
 [![language](https://img.shields.io/badge/language-Golang-blue)](https://golang.org/)
