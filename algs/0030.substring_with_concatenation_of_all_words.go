@@ -33,47 +33,39 @@ func FindSubstring(s string, words []string) []int {
 		return nil
 	}
 
-	// 求words的所有组合
-	var (
-		combs   = []string{""}                     // words所有的组合
-		counter = make(map[string]int, len(words)) // 每一次组合中可用的word数量
-	)
-	for i := 0; i < len(words); i++ {
-		combsLen := len(combs)
-		for j := 0; j < combsLen; j++ {
-			comb := combs[j]
-			for _, word := range words {
-				counter[word]++
-			}
-			for head := 0; head+wordLen <= len(comb); head += wordLen {
-				word := comb[head : head+wordLen]
-				counter[word]--
-			}
-
-			k := 0
-			for _, word := range words {
-				if counter[word] > 0 {
-					if k == 0 {
-						combs[j] = comb + word
-					} else {
-						combs = append(combs, comb+word)
-					}
-					k++
-					counter[word]--
-				}
-			}
-		}
-
-	}
-
-	// 遍历比较所有的子字符串
 	var indices []int
-	for head := 0; head+combLen <= len(s); head++ {
-		subStr := s[head : head+combLen]
-		for _, comb := range combs {
-			if comb == subStr {
-				indices = append(indices, head)
-				break
+	m := make(map[string]int)
+	// 分wordLen批次比较子串
+	for i := 0; i < wordLen; i++ {
+		j := i
+		for j+combLen <= len(s) {
+			for _, word := range words {
+				m[word]++
+			}
+			k := j
+			step := wordLen
+			for k+wordLen <= j+combLen {
+				word := s[k : k+wordLen]
+				count, ok := m[word]
+				// 不相等则跳过
+				if !ok {
+					step = k - j + wordLen
+					break
+				}
+				// 说明有重复等于words中某个元素的情况
+				if count == 0 {
+					break
+				}
+				m[word]--
+				k += wordLen
+			}
+			if k == j+combLen {
+				indices = append(indices, j)
+			}
+			j += step
+
+			for _, word := range words {
+				m[word] = 0
 			}
 		}
 	}
