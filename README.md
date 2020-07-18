@@ -1,4 +1,10 @@
 # Leetcode
+
+<p align='left'>
+<img src='./assets/imgs/golang-algs.jpeg'  height="120">
+<img src='./assets/imgs/leetcode-logo.jpeg'  height="120">
+</p>
+
 [![language](https://img.shields.io/badge/language-Golang-blue)](https://golang.org/)
 [![Documentation](https://godoc.org/github.com/mind1949/leetcode?status.svg)](https://pkg.go.dev/github.com/mind1949/leetcode?tab=doc)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mind1949/leetcode)](https://goreportcard.com/report/github.com/mind1949/leetcode) 
