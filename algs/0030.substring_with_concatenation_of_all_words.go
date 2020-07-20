@@ -35,37 +35,44 @@ func FindSubstring(s string, words []string) []int {
 
 	var indices []int
 	m := make(map[string]int)
+	for _, word := range words {
+		m[word]++
+	}
 	// 分wordLen批次比较子串
 	for i := 0; i < wordLen; i++ {
-		j := i
-		for j+combLen <= len(s) {
-			for _, word := range words {
-				m[word]++
-			}
-			k := j
-			step := wordLen
-			for k+wordLen <= j+combLen {
-				word := s[k : k+wordLen]
-				count, ok := m[word]
-				// 不相等则跳过
-				if !ok {
-					step = k - j + wordLen
-					break
+		counter := make(map[string]int)
+		l, r := i, i
+		num := 0
+		for r+wordLen <= len(s) {
+			word := s[r : r+wordLen]
+			r += wordLen
+			// 若word在words中不存在
+			if m[word] == 0 {
+				l = r
+				num = 0
+				for word := range counter {
+					counter[word] = 0
 				}
-				// 说明有重复等于words中某个元素的情况
-				if count == 0 {
-					break
-				}
-				m[word]--
-				k += wordLen
-			}
-			if k == j+combLen {
-				indices = append(indices, j)
-			}
-			j += step
 
-			for _, word := range words {
-				m[word] = 0
+				continue
+			}
+
+			counter[word]++
+			num++
+			// 若word重复了
+			for counter[word] > m[word] {
+				counter[s[l:l+wordLen]]--
+				l += wordLen
+				num--
+
+				continue
+			}
+			// 若子串中的单词与words中的单词完全匹配
+			if num == len(words) {
+				indices = append(indices, l)
+				counter[s[l:l+wordLen]]--
+				num--
+				l += wordLen
 			}
 		}
 	}

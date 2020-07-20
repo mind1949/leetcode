@@ -2,6 +2,7 @@ package algs
 
 import (
 	"reflect"
+	"sort"
 	"testing"
 )
 
@@ -20,8 +21,11 @@ func TestFindSubstring(t *testing.T) {
 			[]int{935},
 		},
 		{"abababab", []string{"a", "b", "a"}, []int{0, 2, 4}},
+		{"aaaaaaaa", []string{"aa", "aa", "aa"}, []int{0, 1, 2}},
 	} {
 		got := FindSubstring(c.s, c.words)
+		sort.Ints(got)
+		sort.Ints(c.expect)
 		if !reflect.DeepEqual(got, c.expect) {
 			t.Errorf("s: %q\t|\twords: %v\t|\texpect: %v\t|\tgot: %v", c.s, c.words, c.expect, got)
 		}
