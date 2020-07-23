@@ -41,13 +41,13 @@ func TestFindSubstring(t *testing.T) {
 	}
 }
 
-func TestFindSubstringWithHash(t *testing.T) {
-	for _, c := range subStringCases {
-		got := FindSubstringWithHash(c.s, c.words)
-		sort.Ints(got)
-		sort.Ints(c.expect)
-		if !reflect.DeepEqual(got, c.expect) {
-			t.Errorf("s: %q\t|\twords: %v\t|\texpect: %v\t|\tgot: %v", c.s, c.words, c.expect, got)
-		}
-	}
-}
+// func TestFindSubstringWithHash(t *testing.T) {
+// 	for _, c := range subStringCases {
+// 		got := FindSubstringWithHash(c.s, c.words)
+// 		sort.Ints(got)
+// 		sort.Ints(c.expect)
+// 		if !reflect.DeepEqual(got, c.expect) {
+// 			t.Errorf("s: %q\t|\twords: %v\t|\texpect: %v\t|\tgot: %v", c.s, c.words, c.expect, got)
+// 		}
+// 	}
+// }
