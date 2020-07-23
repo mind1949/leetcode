@@ -1,5 +1,10 @@
 package algs
 
+import (
+	"math"
+	"sort"
+)
+
 /*
 FindSubstring solves the follwing problem:
 	You are given a string, s, and a list of words, words, that are all of the same length.
@@ -74,6 +79,56 @@ func FindSubstring(s string, words []string) []int {
 				num--
 				l += wordLen
 			}
+		}
+	}
+
+	return indices
+}
+
+// FindSubstringWithHash 使用滚动哈希法实现FindSubString
+func FindSubstringWithHash(s string, words []string) []int {
+	// 排除特殊情况
+	if len(words) == 0 {
+		return nil
+	}
+	wordLen := len(words[0])
+	combLen := wordLen * len(words)
+
+	// 求出words组合的hash值wordsHash
+	sort.Strings(words)
+	m := make(map[string]int)
+	for i := range words {
+		m[words[i]] = i + 1
+	}
+	wordsHash := 0
+	// FIXME:
+	word2Hash := func(word string) int {
+		return int(math.Pow(float64(len(words)), float64(m[word]))) % (1 << 61)
+	}
+	for i := 0; i < len(words); i++ {
+		h := word2Hash(words[i])
+		wordsHash += h
+	}
+
+	// 求出所有的合规的子串索引indcies
+	var indices []int
+	for i := 0; i < wordLen; i++ {
+		l, r := i, i
+		subStrHash := 0
+		for l+combLen <= len(s) {
+			for r-l+wordLen <= combLen {
+				word := s[r : r+wordLen]
+				h := word2Hash(word)
+				subStrHash += h
+				r += wordLen
+			}
+			if subStrHash == wordsHash {
+				indices = append(indices, l)
+			}
+
+			h := word2Hash(s[l : l+wordLen])
+			subStrHash -= h
+			l += wordLen
 		}
 	}
 
