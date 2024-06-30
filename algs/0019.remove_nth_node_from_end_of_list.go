@@ -2,6 +2,7 @@ package algs
 
 /*
 RemoveNthFromEnd solves the following problem:
+
 	Given a linked list, remove the n-th node from the end of list and return its head.
 
 	Example:

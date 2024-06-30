@@ -7,6 +7,7 @@ import (
 
 /*
 MyAtoi solves the following problem:
+
 	Implement atoi which converts a string to an integer.
 
 	The function first discards as many whitespace characters as necessary

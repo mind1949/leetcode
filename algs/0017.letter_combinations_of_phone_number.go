@@ -5,6 +5,7 @@ LetterCombinations sloves the following problem:
 Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
 
 A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
 	{
 		2: []{"a", "b", "c"},
 		3: []{"d", "e", "f"},
@@ -15,7 +16,9 @@ A mapping of digit to letters (just like on the telephone buttons) is given belo
 		8: []{t", "u", "v"},
 		9: []{w", "x", "y", "x"},
 	}
+
 Example:
+
 	Input: "23"
 	Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 

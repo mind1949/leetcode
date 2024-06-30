@@ -2,6 +2,7 @@ package algs
 
 /*
 LengthOfLongestSubstring solves following problem:
+
 	Given a string, find the length of the longest substring without repeating characters.
 
 	Example 1:
