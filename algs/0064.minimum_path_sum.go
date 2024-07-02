@@ -41,9 +41,102 @@ func MiniPathSum(grid [][]int) int {
 		return math.MaxInt
 	}
 
-	return NewMiniPathSumBacktrack(grid).Calc()
+	return MiniPathSumWithDP(grid)
 }
 
+// MiniPathSumWithDFS 使用暴力搜索计算最短路径
+//
+// 状态转移方程:
+// * f(i, j) = min(f(i-1, j), f(i, j-1)) + grid[i][j]
+//
+// 初始状态:
+// * f(0, 0) = grid[0][0]
+//
+// 边界条件:
+// * f(i, j) 中的 i 与 j 均大于等于0
+func MiniPathSumWithDFS(grid [][]int, i, j int) int {
+	// 初始状态
+	if i == 0 && j == 0 {
+		return grid[0][0]
+	}
+	// 不合法状态
+	if i < 0 || j < 0 {
+		return math.MaxInt
+	}
+
+	return min(MiniPathSumWithDFS(grid, i-1, j),
+		MiniPathSumWithDFS(grid, i, j-1)) + grid[i][j]
+}
+
+// MiniPathSumWithDFSMem 使用记忆搜索优化后的暴力搜索计算最短路径
+//
+// 状态转移方程:
+// * f(i, j) = min(f(i-1, j), f(i, j-1)) + grid[i][j]
+//
+// 初始状态:
+// * f(0, 0) = grid[0][0]
+//
+// 边界条件:
+// * f(i, j) 中的 i 与 j 均大于等于0
+func MiniPathSumWithDFSMem(mem, grid [][]int, i, j int) int {
+	// 初始状态
+	if i == 0 && j == 0 {
+		return grid[0][0]
+	}
+	// 不合法状态
+	if i < 0 || j < 0 {
+		return math.MaxInt
+	}
+
+	if result := mem[i][j]; result != -1 {
+		return result
+	}
+	up := MiniPathSumWithDFS(grid, i-1, j)
+	left := MiniPathSumWithDFS(grid, i, j-1)
+	mem[i][j] = min(up, left) + grid[i][j]
+	return mem[i][j]
+}
+
+// MiniPathSumWithDP 使用动态规划解决
+//
+// 状态转移方程:
+// * f(i, j) = min(f(i-1, j), f(i, j-1)) + grid[i][j]
+//
+// 初始状态:
+// * f(0, 0) = grid[0][0]
+//
+// 边界条件:
+// * f(i, j) 中的 i 与 j 均大于等于0
+func MiniPathSumWithDP(grid [][]int) int {
+	n, m := len(grid), len(grid[0])
+	// 初始化 dp 表
+	dp := make([][]int, n)
+	for i := 0; i < n; i++ {
+		dp[i] = make([]int, m)
+	}
+
+	// 准备初始状态
+	dp[0][0] = grid[0][0]
+	// 首行状态转移
+	for i := 1; i < m; i++ {
+		dp[0][i] = dp[0][i-1] + grid[0][i]
+	}
+	// 首列状态转移
+	for i := 1; i < n; i++ {
+		dp[i][0] = dp[i-1][0] + grid[i][0]
+	}
+
+	// 逐个遍历
+	for i := 1; i < n; i++ {
+		for j := 1; j < m; j++ {
+			// 状态转移方程
+			dp[i][j] = min(dp[i][j-1], dp[i-1][j]) + grid[i][j]
+		}
+	}
+	return dp[n-1][m-1]
+}
+
+// NewMiniPathSumBacktrack 使用回溯算法枚举计算最短路径
 func NewMiniPathSumBacktrack(grid [][]int) *MiniPathSumBacktrack {
 	return &MiniPathSumBacktrack{
 		grid: grid,
@@ -54,7 +147,7 @@ func NewMiniPathSumBacktrack(grid [][]int) *MiniPathSumBacktrack {
 	}
 }
 
-// MiniPathSumBacktrack
+// MiniPathSumBacktrack 使用回溯算法枚举计算最短路径
 type MiniPathSumBacktrack struct {
 	// 要走的网格
 	grid [][]int
