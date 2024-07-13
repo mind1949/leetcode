@@ -101,4 +101,53 @@ impl Solution {
         }
         return result;
     }
+
+    /// [128.Longest Consecutive Sequence](https://leetcode.cn/problems/longest-consecutive-sequence/description/)
+    ///
+    /// Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+    ///
+    /// You must write an algorithm that runs in O(n) time.
+    ///
+    /// Example 1:
+    ///
+    /// Input: nums = [100,4,200,1,3,2]
+    /// Output: 4
+    /// Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
+    ///
+    /// Example 2:
+    ///
+    /// Input: nums = [0,3,7,2,5,8,4,6,0,1]
+    /// Output: 9
+    ///
+    /// Constraints:
+    ///
+    ///	0 <= nums.length <= 10^5
+    ///	-10^9 <= nums[i] <= 10^9
+    pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
+        let mut exist: HashMap<i32, bool> = HashMap::new();
+        for num in nums {
+            exist.insert(num, true);
+        }
+
+        let mut longest = 0;
+        for (&num, _) in exist.iter() {
+            if let Some(&ok) = exist.get(&(num - 1)) {
+                if ok {
+                    continue;
+                }
+            }
+
+            let mut length = 1;
+            let mut n = num;
+            while let Some(&ok) = exist.get(&(n + 1)) {
+                if !ok {
+                    break;
+                }
+                length += 1;
+                n += 1;
+            }
+            longest = std::cmp::max(longest, length)
+        }
+        return longest;
+    }
 }
