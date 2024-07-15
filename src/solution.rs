@@ -232,13 +232,11 @@ impl Solution {
         let mut max_area = 0;
 
         while j > i {
+            let area = height[i].min(height[j]) * (j - i) as i32;
+            max_area = max_area.max(area);
             if height[i] > height[j] {
-                let area = height[j] * (j - i) as i32;
-                max_area = max_area.max(area);
                 j -= 1;
             } else {
-                let area = height[i] * (j - i) as i32;
-                max_area = max_area.max(area);
                 i += 1;
             }
         }

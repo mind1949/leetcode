@@ -14,24 +14,18 @@ MaxArea solves the following problem:
 */
 func MaxArea(height []int) int {
 	var (
-		i, j = 0, len(height) - 1
-		max  = 0
+		i, j    = 0, len(height) - 1
+		maxArea = 0
 	)
 	for j-i > 0 {
+		area := min(height[i], height[j]) * (j - i)
+		maxArea = max(maxArea, area)
 		if height[j] < height[i] {
-			area := height[j] * (j - i)
-			if max < area {
-				max = area
-			}
 			j--
 		} else {
-			area := height[i] * (j - i)
-			if max < area {
-				max = area
-			}
 			i++
 		}
 	}
 
-	return max
+	return maxArea
 }
