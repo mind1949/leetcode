@@ -370,4 +370,63 @@ impl Solution {
         }
         return total;
     }
+
+    // [3. Longest Substring Without Repeating Characters](https://leetcode.cn/problems/longest-substring-without-repeating-characters/description/)
+    //
+    // Given a string s, find the length of the longest
+    // substring
+    // without repeating characters.
+    //
+    //
+    //
+    // Example 1:
+    //
+    // Input: s = "abcabcbb"
+    // Output: 3
+    // Explanation: The answer is "abc", with the length of 3.
+    //
+    // Example 2:
+    //
+    // Input: s = "bbbbb"
+    // Output: 1
+    // Explanation: The answer is "b", with the length of 1.
+    //
+    // Example 3:
+    //
+    // Input: s = "pwwkew"
+    // Output: 3
+    // Explanation: The answer is "wke", with the length of 3.
+    // Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+    //
+    //
+    //
+    // Constraints:
+    //
+    //     0 <= s.length <= 5 * 104
+    //     s consists of English letters, digits, symbols and spaces.
+    //
+    pub fn length_of_longest_substring(s: String) -> i32 {
+        if s.len() <= 1 {
+            return s.len() as i32;
+        }
+
+        let mut left = 0;
+        let mut right = 0;
+        let mut longest = 0;
+        let mut m: HashMap<char, usize> = HashMap::new();
+        let chars: Vec<char> = s.chars().collect();
+        while left <= right && right < chars.len() {
+            if let Some(&idx) = &m.get(&chars[right]) {
+                for i in left..(idx) {
+                    m.remove(&chars[i]);
+                }
+                left = idx + 1;
+            } else {
+                longest = longest.max(right - left + 1);
+            }
+            m.entry(chars[right]).or_insert(right);
+            right += 1;
+        }
+        return longest as i32;
+    }
 }
