@@ -1,7 +1,7 @@
 /// [Leetcode](https://leetcode.cn) solution
 pub struct Solution;
 
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 
 impl Solution {
     /// [1. Tow Sum](https://leetcode.cn/problems/two-sum/description)
@@ -532,5 +532,67 @@ impl Solution {
             i += 1;
         }
         return res;
+    }
+
+    /// [239. Sliding Window Maximum](https://leetcode.cn/problems/sliding-window-maximum/description/)
+
+    ///
+    /// You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+    ///
+    /// Return the max sliding window.
+    ///
+    /// Example 1:
+    ///
+    /// Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+    /// Output: [3,3,5,5,6,7]
+    /// Explanation:
+    /// Window position                Max
+    /// ---------------               -----
+    /// [1  3  -1] -3  5  3  6  7       3
+    ///
+    ///	1 [3  -1  -3] 5  3  6  7       3
+    ///	1  3 [-1  -3  5] 3  6  7       5
+    ///	1  3  -1 [-3  5  3] 6  7       5
+    ///	1  3  -1  -3 [5  3  6] 7       6
+    ///	1  3  -1  -3  5 [3  6  7]      7
+    ///
+    /// Example 2:
+    ///
+    /// Input: nums = [1], k = 1
+    /// Output: [1]
+    ///
+    /// Constraints:
+    ///
+    ///	1 <= nums.length <= 10^5
+    ///	-10^4 <= nums[i] <= 10^4
+    ///	1 <= k <= nums.length
+    pub fn max_sliding_window(nums: Vec<i32>, k: i32) -> Vec<i32> {
+        let k = k as usize;
+        let mut top_idx: VecDeque<usize> = VecDeque::new();
+
+        // 定义一个普通函数，用于执行单调栈的 push 操作
+        fn push(nums: &Vec<i32>, top_idx: &mut VecDeque<usize>, i: usize) {
+            while !top_idx.is_empty() && nums[i] >= nums[*top_idx.back().unwrap()] {
+                top_idx.pop_back();
+            }
+            top_idx.push_back(i);
+        }
+
+        for i in 0..k {
+            push(&nums, &mut top_idx, i);
+        }
+
+        let mut res = Vec::with_capacity(nums.len() - k + 1);
+        res.push(nums[top_idx[0]]);
+
+        for i in k..nums.len() {
+            push(&nums, &mut top_idx, i);
+            while !top_idx.is_empty() && *top_idx.front().unwrap() <= i - k {
+                top_idx.pop_front();
+            }
+            res.push(nums[top_idx[0]]);
+        }
+
+        res
     }
 }
