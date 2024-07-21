@@ -472,25 +472,25 @@ impl Solution {
             count_p[c as usize - 'a' as usize] += 1;
         }
 
-        let chars_s: Vec<char> = s.chars().collect();
+        let chars: Vec<char> = s.chars().collect();
         let mut count_sub = [0; 26];
-        for &c in chars_s[0..chars_p.len()].iter() {
+        for &c in chars[0..chars_p.len()].iter() {
             count_sub[c as usize - 'a' as usize] += 1;
         }
 
         let mut res = vec![];
         let (mut i, mut j) = (0, p.len() - 1);
-        while i <= j && j < chars_s.len() {
+        while i <= j && j < chars.len() {
             if count_p == count_sub {
                 res.push(i as i32);
             }
 
-            if let Some(&c) = chars_s.get(i) {
+            if let Some(&c) = chars.get(i) {
                 count_sub[c as usize - 'a' as usize] -= 1;
             }
             i += 1;
             j += 1;
-            if let Some(&c) = chars_s.get(j) {
+            if let Some(&c) = chars.get(j) {
                 count_sub[c as usize - 'a' as usize] += 1;
             }
         }
@@ -594,5 +594,89 @@ impl Solution {
         }
 
         res
+    }
+
+    /// [76. Minimum Window Substring](https://leetcode.cn/problems/minimum-window-substring/description/)
+    ///
+    /// Given two strings s and t of lengths m and n respectively, return the minimum window
+    /// substring
+    /// of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
+    ///
+    /// The testcases will be generated such that the answer is unique.
+    ///
+    /// Example 1:
+    ///
+    /// Input: s = "ADOBECODEBANC", t = "ABC"
+    /// Output: "BANC"
+    /// Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
+    ///
+    /// Example 2:
+    ///
+    /// Input: s = "a", t = "a"
+    /// Output: "a"
+    /// Explanation: The entire string s is the minimum window.
+    ///
+    /// Example 3:
+    ///
+    /// Input: s = "a", t = "aa"
+    /// Output: ""
+    /// Explanation: Both 'a's from t must be included in the window.
+    /// Since the largest window of s only has one 'a', return empty string.
+    ///
+    /// Constraints:
+    ///
+    ///	m == s.length
+    ///	n == t.length
+    ///	1 <= m, n <= 105
+    ///	s and t consist of uppercase and lowercase English letters.
+    ///
+    /// Follow up: Could you find an algorithm that runs in O(m + n) time?
+    pub fn min_window(s: String, t: String) -> String {
+        if t.len() > s.len() {
+            return "".to_string();
+        }
+
+        fn get(chars: &Vec<char>, i: usize) -> usize {
+            chars[i] as usize - 'A' as usize
+        }
+        // 统计 t 中每个字符的个数
+        let mut counter = [0; 58];
+        let chars: Vec<char> = t.chars().collect();
+        for i in 0..chars.len() {
+            counter[get(&chars, i)] += 1;
+        }
+
+        fn contain(src: &[i32], target: &[i32]) -> bool {
+            for (i, &v) in target.iter().enumerate() {
+                if src[i] >= v {
+                    continue;
+                }
+                return false;
+            }
+            return true;
+        }
+        let chars: Vec<char> = s.chars().collect();
+        let mut counter_s = [0; 58];
+        let (mut l, mut r) = (0, 0);
+        let (mut i, mut j) = (0, 1);
+
+        counter_s[get(&chars, 0)] += 1;
+        while i < j && j <= chars.len() {
+            if contain(&counter_s, &counter) {
+                if r - l == 0 || j - i < r - l {
+                    (l, r) = (i, j)
+                }
+
+                counter_s[get(&chars, i)] -= 1;
+                i += 1;
+            } else {
+                j += 1;
+                if j <= chars.len() {
+                    counter_s[get(&chars, j - 1)] += 1;
+                }
+            }
+        }
+
+        return s[l..r].to_string();
     }
 }
