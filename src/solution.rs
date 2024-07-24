@@ -776,4 +776,61 @@ impl Solution {
         }
         return res;
     }
+
+    /// [189. Rotate Array](https://leetcode.cn/problems/rotate-array)
+    ///
+    /// Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
+    ///
+    /// Example 1:
+    ///
+    /// Input: nums = [1,2,3,4,5,6,7], k = 3
+    /// Output: [5,6,7,1,2,3,4]
+    /// Explanation:
+    /// rotate 1 steps to the right: [7,1,2,3,4,5,6]
+    /// rotate 2 steps to the right: [6,7,1,2,3,4,5]
+    /// rotate 3 steps to the right: [5,6,7,1,2,3,4]
+    ///
+    /// Example 2:
+    ///
+    /// Input: nums = [-1,-100,3,99], k = 2
+    /// Output: [3,99,-1,-100]
+    /// Explanation:
+    /// rotate 1 steps to the right: [99,-1,-100,3]
+    /// rotate 2 steps to the right: [3,99,-1,-100]
+    ///
+    /// Constraints:
+    ///
+    ///	1 <= nums.length <= 10^5
+    ///	-2^31 <= nums[i] <= 2^31 - 1
+    ///	0 <= k <= 10^5
+    ///
+    /// Follow up:
+    ///
+    ///	Try to come up with as many solutions as you can. There are at least three different ways to solve this problem.
+    ///	Could you do it in-place with O(1) extra space?
+    pub fn rotate_array(nums: &mut Vec<i32>, k: i32) {
+        let k = k as usize;
+        let count = Self::gcd(nums.len(), k);
+        let k = k % nums.len();
+
+        for i in 0..count {
+            let mut tmp = nums[i];
+            let mut j = (i + k) % nums.len();
+            let mut ok = true;
+            while ok {
+                (nums[j], tmp) = (tmp, nums[j]);
+                ok = j != i;
+                j = (j + k) % nums.len();
+            }
+        }
+    }
+
+    /// Greate Common Divisor
+    /// 利用欧几里得算法, 计算 a 与 b 的最大公约数
+    pub fn gcd(mut a: usize, mut b: usize) -> usize {
+        while a != 0 {
+            (a, b) = (b % a, a);
+        }
+        return b;
+    }
 }
