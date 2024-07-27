@@ -874,7 +874,7 @@ impl Solution {
         result
     }
 
-    /// [41. Frist Missing Positive]
+    /// [41. Frist Missing Positive](https://leetcode.cn/problems/first-missing-positive)
     ///
     /// Given an unsorted integer array nums. Return the smallest positive integer that is not present in nums.
     ///
@@ -931,5 +931,71 @@ impl Solution {
             }
         }
         nums.len() as i32 + 1
+    }
+
+    /// [73. Set Matrix Zeros](https://leetcode.cn/problems/set-matrix-zeroes/description)
+    ///
+    /// Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's.
+    ///
+    /// You must do it in place.
+    ///
+    /// Example 1:
+    ///
+    /// Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]
+    /// Output: [[1,0,1],[0,0,0],[1,0,1]]
+    ///
+    /// Example 2:
+    ///
+    /// Input: matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+    /// Output: [[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+    ///
+    /// Constraints:
+    ///
+    ///	m == matrix.length
+    ///	n == matrix[0].length
+    ///	1 <= m, n <= 200
+    ///	-231 <= matrix[i][j] <= 231 - 1
+    ///
+    /// Follow up:
+    ///
+    ///	A straightforward solution using O(mn) space is probably a bad idea.
+    ///	A simple improvement uses O(m + n) space, but still not the best solution.
+    ///	Could you devise a constant space solution?
+    pub fn set_zeros(matrix: &mut Vec<Vec<i32>>) {
+        // 标记第一行/第一类是否包含0
+        let (mut row0, mut column0) = (false, false);
+        for i in 0..matrix.len() {
+            for j in 0..matrix[0].len() {
+                if matrix[i][j] == 0 {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                    if i == 0 {
+                        row0 = true;
+                    }
+                    if j == 0 {
+                        column0 = true
+                    }
+                }
+            }
+        }
+
+        // 遍历赋值
+        for i in 1..matrix.len() {
+            for j in 1..matrix[i].len() {
+                if matrix[i][0] == 0 || matrix[0][j] == 0 {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        if row0 {
+            for i in 0..matrix[0].len() {
+                matrix[0][i] = 0;
+            }
+        }
+        if column0 {
+            for i in 0..matrix.len() {
+                matrix[i][0] = 0;
+            }
+        }
     }
 }
