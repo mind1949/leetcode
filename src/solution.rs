@@ -998,4 +998,70 @@ impl Solution {
             }
         }
     }
+
+    /// [54. Spiral Matrix](https://leetcode.cn/problems/spiral-matrix/description/)
+    ///
+    /// Given an m x n matrix, return all elements of the matrix in spiral order.
+    ///
+    /// Example 1:
+    ///
+    /// Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+    /// Output: [1,2,3,6,9,8,7,4,5]
+    ///
+    /// Example 2:
+    ///
+    /// Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+    /// Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+    ///
+    /// Constraints:
+    ///
+    ///	m == matrix.length
+    ///	n == matrix[i].length
+    ///	1 <= m, n <= 10
+    ///	-100 <= matrix[i][j] <= 100
+    pub fn spiral_order(matrix: Vec<Vec<i32>>) -> Vec<i32> {
+        if matrix.is_empty() {
+            return vec![];
+        }
+        let m = matrix.len();
+        let n = matrix[0].len();
+        let mut res = Vec::with_capacity(m * n);
+
+        let (mut left, mut right, mut top, mut bottom) = (0, n, 0, m);
+        while left < right && top < bottom && res.capacity() > res.len() {
+            // 向右
+            for i in left..right {
+                if res.capacity() <= res.len() {
+                    break;
+                }
+                res.push(matrix[top][i]);
+            }
+            top += 1;
+            // 向下
+            for i in top..bottom {
+                if res.capacity() <= res.len() {
+                    break;
+                }
+                res.push(matrix[i][right - 1]);
+            }
+            right -= 1;
+            // 向左
+            for i in (left..right).rev() {
+                if res.capacity() <= res.len() {
+                    break;
+                }
+                res.push(matrix[bottom - 1][i]);
+            }
+            bottom -= 1;
+            // 向上
+            for i in (top..bottom).rev() {
+                if res.capacity() <= res.len() {
+                    break;
+                }
+                res.push(matrix[i][left]);
+            }
+            left += 1;
+        }
+        res
+    }
 }
